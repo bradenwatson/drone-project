@@ -18,3 +18,15 @@ def home(request):
     }
 
     return render(request, "index.html", context)
+
+
+def user_registration(request):
+    form = UserRegistrationForm(request.POST or None)
+
+    if form.is_valid():
+        user = form.save()
+        login(request, user)
+        return redirect("home")
+
+    context = {"form": form}
+    return render(request, "registration\\signup.html", context)
