@@ -60,3 +60,21 @@ def change_password(request):
 
     context = {"form": form}
     return render(request, "change_password.html", context)
+
+
+@login_required
+def create_ap(request):
+    form = APForm(request.POST or None)
+
+    if form.is_valid():
+        ap = form.save(commit=False)
+        ap.updated_by = request.user
+        form.save()
+        return redirect("home")
+
+    context = {
+        "form": form,
+        "model_name": "AP"
+    }
+
+    return render(request, "create_item.html", context)
