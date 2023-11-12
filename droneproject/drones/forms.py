@@ -42,3 +42,14 @@ class APForm(forms.ModelForm):
             "auth_method",
             "updated_by"
         ]
+
+
+class SwarmsForm(forms.ModelForm):
+
+    class Meta:
+        model = Swarms
+
+        fields = [
+            "swarm_name",
+            "updated_by"
+        ]
