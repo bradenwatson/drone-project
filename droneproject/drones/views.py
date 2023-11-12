@@ -124,3 +124,24 @@ def create_swarm(request):
     }
 
     return render(request, "create_item.html", context)
+
+
+@login_required
+def update_swarm(request, swarm_id):
+    swarm = Swarms.objects.get(swarm_id=swarm_id)
+
+    if request.method == "POST":
+        form = SwarmsForm(request.POST, instance=swarm)
+
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = SwarmsForm(instance=swarm)
+
+    context = {
+        "form": form,
+        "swarm": swarm
+    }
+
+    return render(request, "update_swarm.html", context)
