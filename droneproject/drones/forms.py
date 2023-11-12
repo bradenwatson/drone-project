@@ -53,3 +53,27 @@ class SwarmsForm(forms.ModelForm):
             "swarm_name",
             "updated_by"
         ]
+
+
+class DronesForm(forms.ModelForm):
+    drone_name = forms.CharField(widget=forms.TextInput(
+        attrs={"placeholder": "Name",
+               "style": "width: 125px;"}))
+
+    mac_address = forms.CharField(widget=forms.TextInput(
+        attrs={"placeholder": "XX-XX-XX-XX-XX-XX",
+               "style": "width: 140px;"}))
+
+    ip_address = forms.GenericIPAddressField(widget=forms.TextInput(
+        attrs={"placeholder": "0.0.0.0",
+               "style": "width: 100px;"}))
+
+    class Meta:
+        model = Drones
+
+        fields = [
+            "drone_name",
+            "mac_address",
+            "ip_address",
+            "swarm_id"
+        ]
