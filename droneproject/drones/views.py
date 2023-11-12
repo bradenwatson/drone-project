@@ -30,3 +30,18 @@ def user_registration(request):
 
     context = {"form": form}
     return render(request, "registration\\signup.html", context)
+
+
+@login_required
+def update_user(request):
+    if request.method == "POST":
+        form = UpdateUserForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = UpdateUserForm(instance=request.user)
+
+    context = {"form": form}
+    return render(request, "update_user.html", context)
