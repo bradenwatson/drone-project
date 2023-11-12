@@ -99,3 +99,10 @@ def update_ap(request, ap_id):
     }
 
     return render(request, "update_ap.html", context)
+
+
+@login_required
+def delete_ap(request, ap_id):
+    ap = AP.objects.get(ap_id=ap_id)
+    ap.delete()
+    return redirect("home")
