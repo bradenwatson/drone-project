@@ -29,3 +29,16 @@ class UpdateUserForm(UserChangeForm):
             "username",
             "email"
         ]
+
+
+class APForm(forms.ModelForm):
+
+    class Meta:
+        model = AP
+
+        fields = [
+            "ssid",
+            "password",
+            "auth_method",
+            "updated_by"
+        ]
