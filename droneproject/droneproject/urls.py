@@ -33,5 +33,19 @@ from drones.views import (
 
 
 urlpatterns = [
-
+    path("", home, name="home"),
+    path("account/", include("django.contrib.auth.urls")),
+    path("account/signup/", user_registration, name="signup"),
+    path("account/update/", update_user, name="edit_account"),
+    path("account/change-password/", change_password, name="change_password"),
+    path("create-ap/", create_ap, name="create_ap"),
+    path("ap/<int:ap_id>/edit/", update_ap, name="edit_ap"),
+    path("ap/<int:ap_id>/delete/", delete_ap, name="delete_ap"),
+    path("create-drone/", create_drone, name="create_drone"),
+    path("drone/<int:drone_id>/edit/", update_drone, name="edit_drone"),
+    path("drone/<int:drone_id>/delete/", delete_drone, name="delete_drone"),
+    path("create-swarm/", create_swarm, name="create_swarm"),
+    path("swarm/<int:swarm_id>/edit/", update_swarm, name="edit_swarm"),
+    path("swarm/<int:swarm_id>/delete/", delete_swarm, name="delete_swarm")
 ]
+
