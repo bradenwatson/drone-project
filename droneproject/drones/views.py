@@ -191,3 +191,9 @@ def update_drone(request, drone_id):
     }
 
     return render(request, "update_drone.html", context)
+
+
+@login_required
+def delete_drone(request, drone_id):
+    drone = Drones.objects.get(drone_id=drone_id)
+    drone.delete()
