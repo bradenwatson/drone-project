@@ -106,3 +106,21 @@ def delete_ap(request, ap_id):
     ap = AP.objects.get(ap_id=ap_id)
     ap.delete()
     return redirect("home")
+
+
+@login_required
+def create_swarm(request):
+    form = SwarmsForm(request.POST or None)
+
+    if form.is_valid():
+        swarm = form.save(commit=False)
+        swarm.updated_by = request.user
+        form.save()
+        return redirect("home")
+
+    context = {
+        "form": form,
+        "model_name": "Swarm"
+    }
+
+    return render(request, "create_item.html", context)
