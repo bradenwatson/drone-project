@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drone Project • Log in</title>
+</head>
+<body>
+    {% block content %}
+    <h1>Log in</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div>
+            {{ form.as_p }}
+        </div>
+
+        <div>
+            <input type="submit" value="Log in">
+            <a href="{% url 'home' %}">Cancel</a>
+        </div>
+    </form>
+    {% endblock %}
+</body>
+</html>

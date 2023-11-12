@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>Drone Project • New {{ model_name }}</title>
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    <h1>New {{ model_name }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div>
+            {{ form.as_p }}
+        </div>
+
+        <div>
+            <input type="submit" value="Submit">
+            <a href="{% url 'home' %}">Cancel</a>
+        </div>
+    </form>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drone Project • Edit Drone</title>
+</head>
+<body>
+    {% block content %}
+    <h1>Edit Drone</h1>
+
+    <form action="{% url 'edit_drone' drone.drone_id %}" method="post">
+        {% csrf_token %}
+
+        <div>
+            {{ form.as_p }}
+        </div>
+
+        <div>
+            <input type="submit" value="Save">
+            <a href="{% url 'home' %}">Cancel</a>
+        </div>
+    </form>
+    {% endblock %}
+</body>
+</html>

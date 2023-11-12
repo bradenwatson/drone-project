@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drone Project • Update User</title>
+</head>
+<body>
+    {% block content %}
+    <h1>Update User</h1>
+
+    <form action="{% url 'edit_account' %}" method="post">
+        {% csrf_token %}
+
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" name="username" value="{{ form.username.value }}">
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="{{ form.email.value }}">
+        </div>
+
+        <a href="{% url 'change_password' %}">Change Password</a>
+
+        <div>
+            <input type="submit" value="Save Changes">
+            <a href="{% url 'home' %}">Cancel</a>
+        </div>
+    </form>
+    {% endblock %}
+</body>
+</html>

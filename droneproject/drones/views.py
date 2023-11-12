@@ -32,7 +32,7 @@ def user_registration(request):
     return render(request, "registration\\signup.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def update_user(request):
     if request.method == "POST":
         form = UpdateUserForm(request.POST, instance=request.user)
@@ -47,7 +47,7 @@ def update_user(request):
     return render(request, "update_user.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def change_password(request):
     if request.method == "POST":
         form = SetPasswordForm(request.user, request.POST)
@@ -62,7 +62,7 @@ def change_password(request):
     return render(request, "change_password.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def create_ap(request):
     form = APForm(request.POST or None)
 
@@ -80,7 +80,7 @@ def create_ap(request):
     return render(request, "create_item.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def update_ap(request, ap_id):
     ap = AP.objects.get(ap_id=ap_id)
 
@@ -101,14 +101,14 @@ def update_ap(request, ap_id):
     return render(request, "update_ap.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def delete_ap(request, ap_id):
     ap = AP.objects.get(ap_id=ap_id)
     ap.delete()
     return redirect("home")
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def create_swarm(request):
     form = SwarmsForm(request.POST or None)
 
@@ -126,7 +126,7 @@ def create_swarm(request):
     return render(request, "create_item.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def update_swarm(request, swarm_id):
     swarm = Swarms.objects.get(swarm_id=swarm_id)
 
@@ -147,14 +147,14 @@ def update_swarm(request, swarm_id):
     return render(request, "update_swarm.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def delete_swarm(request, swarm_id):
     swarm = Swarms.objects.get(swarm_id=swarm_id)
     swarm.delete()
     return redirect("home")
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def create_drone(request):
     form = DronesForm(request.POST or None)
 
@@ -172,7 +172,7 @@ def create_drone(request):
     return render(request, "create_item.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def update_drone(request, drone_id):
     drone = Drones.objects.get(drone_id=drone_id)
 
@@ -193,7 +193,7 @@ def update_drone(request, drone_id):
     return render(request, "update_drone.html", context)
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def delete_drone(request, drone_id):
     drone = Drones.objects.get(drone_id=drone_id)
     drone.delete()

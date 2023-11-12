@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drone Project • Home</title>
+</head>
+<body>
+    {% block content %}
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Log out</a>
+
+        <a href="{% url 'edit_account' %}">
+            {{ user.username }}
+        </a>
+    {% else %}
+        <a href="{% url 'signup' %}">Sign up</a>
+
+        <a href="{% url 'login' %}">Log in</a>
+    {% endif %}
+
+    <div>
+        <h1>Drones</h1>
+        <a href="{% url 'create_drone' %}">Create Drone</a>
+    </div>
+
+    <ul>
+        {% for drone in drones %}
+        <li>
+            <strong>Drone ID:</strong> {{ drone.drone_id }}<br>
+            <strong>Drone Name:</strong> {{ drone.drone_name }}<br>
+            <strong>MAC Address:</strong> {{ drone.mac_address }}<br>
+            <strong>IP Address:</strong> {{ drone.ip_address }}<br>
+            <strong>Created At:</strong> {{ drone.created_at }}<br>
+            <strong>Updated At:</strong> {{ drone.updated_at }}<br>
+            <strong>Swarm ID:</strong> {{ drone.swarm_id }}<br>
+            <strong>Updated By:</strong> {{ drone.updated_by }}<br>
+            <a href="{% url 'edit_drone' drone.drone_id %}">Edit</a>
+            <a href="{% url 'delete_drone' drone.drone_id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div>
+        <h1>Swarms</h1>
+        <a href="{% url 'create_swarm' %}">Create Swarm</a>
+    </div>
+
+    <ul>
+        {% for swarm in swarms %}
+        <li>
+            <strong>Swarm ID:</strong> {{ swarm.swarm_id }}<br>
+            <strong>Swarm Name:</strong> {{ swarm.swarm_name }}<br>
+            <strong>Created At:</strong> {{ swarm.created_at }}<br>
+            <strong>Updated At:</strong> {{ swarm.updated_at }}<br>
+            <strong>Updated By:</strong> {{ swarm.updated_by }}<br>
+            <a href="{% url 'edit_swarm' swarm.swarm_id %}">Edit</a>
+            <a href="{% url 'delete_swarm' swarm.swarm_id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div>
+        <h1>Access Points</h1>
+        <a href="{% url 'create_ap' %}">Create AP</a>
+    </div>
+
+    <ul>
+        {% for ap in aps %}
+        <li>
+            <strong>AP ID:</strong> {{ ap.ap_id }}<br>
+            <strong>SSID:</strong> {{ ap.ssid }}<br>
+            <strong>Password:</strong> {{ ap.password }}<br>
+            <strong>Auth Method:</strong> {{ ap.auth_method }}<br>
+            <strong>Created At:</strong> {{ ap.created_at }}<br>
+            <strong>Updated At:</strong> {{ ap.updated_at }}<br>
+            <strong>Updated By:</strong> {{ ap.updated_by }}<br>
+            <a href="{% url 'edit_ap' ap.ap_id %}">Edit</a>
+            <a href="{% url 'delete_ap' ap.ap_id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>
