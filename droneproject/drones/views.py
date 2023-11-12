@@ -78,3 +78,24 @@ def create_ap(request):
     }
 
     return render(request, "create_item.html", context)
+
+
+@login_required
+def update_ap(request, ap_id):
+    ap = AP.objects.get(ap_id=ap_id)
+
+    if request.method == "POST":
+        form = APForm(request.POST, instance=ap)
+
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = APForm(instance=ap)
+
+    context = {
+        "form": form,
+        "ap": ap
+    }
+
+    return render(request, "update_ap.html", context)
