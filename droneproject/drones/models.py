@@ -23,3 +23,14 @@ class AP(models.Model):
 
     def __str__(self):
         return str(self.ssid)
+
+
+class Swarms(models.Model):
+    swarm_id = models.AutoField(primary_key=True)
+    swarm_name = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    updated_by = models.ForeignKey(Users, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.swarm_id)
