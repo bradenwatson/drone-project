@@ -145,3 +145,10 @@ def update_swarm(request, swarm_id):
     }
 
     return render(request, "update_swarm.html", context)
+
+
+@login_required
+def delete_swarm(request, swarm_id):
+    swarm = Swarms.objects.get(swarm_id=swarm_id)
+    swarm.delete()
+    return redirect("home")
