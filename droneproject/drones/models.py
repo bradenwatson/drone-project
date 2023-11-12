@@ -34,3 +34,17 @@ class Swarms(models.Model):
 
     def __str__(self):
         return str(self.swarm_id)
+
+
+class Drones(models.Model):
+    drone_id = models.AutoField(primary_key=True)
+    drone_name = models.CharField(max_length=200)
+    mac_address = models.CharField(max_length=17)
+    ip_address = models.GenericIPAddressField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    swarm_id = models.ForeignKey(Swarms, on_delete=models.CASCADE)
+    updated_by = models.ForeignKey(Users, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.drone_id)
