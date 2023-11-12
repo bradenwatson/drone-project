@@ -170,3 +170,24 @@ def create_drone(request):
     }
 
     return render(request, "create_item.html", context)
+
+
+@login_required
+def update_drone(request, drone_id):
+    drone = Drones.objects.get(drone_id=drone_id)
+
+    if request.method == "POST":
+        form = DronesForm(request.POST, instance=drone)
+
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = DronesForm(instance=drone)
+
+    context = {
+        "form": form,
+        "drone": drone
+    }
+
+    return render(request, "update_drone.html", context)
