@@ -152,3 +152,21 @@ def delete_swarm(request, swarm_id):
     swarm = Swarms.objects.get(swarm_id=swarm_id)
     swarm.delete()
     return redirect("home")
+
+
+@login_required
+def create_drone(request):
+    form = DronesForm(request.POST or None)
+
+    if form.is_valid():
+        drone = form.save(commit=False)
+        drone.updated_by = request.user
+        form.save()
+        return redirect("home")
+
+    context = {
+        "form": form,
+        "model_name": "Drone"
+    }
+
+    return render(request, "create_item.html", context)
