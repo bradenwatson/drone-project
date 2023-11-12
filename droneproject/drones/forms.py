@@ -16,3 +16,16 @@ class UserRegistrationForm(UserCreationForm):
             "password1",
             "password2"
         ]
+
+
+class UpdateUserForm(UserChangeForm):
+    username = forms.CharField(max_length=200)
+    email = forms.EmailField(max_length=200)
+
+    class Meta:
+        model = Users
+
+        fields = [
+            "username",
+            "email"
+        ]
