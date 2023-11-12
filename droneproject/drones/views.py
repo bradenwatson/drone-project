@@ -45,3 +45,18 @@ def update_user(request):
 
     context = {"form": form}
     return render(request, "update_user.html", context)
+
+
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        form = SetPasswordForm(request.user, request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = SetPasswordForm(request.user)
+
+    context = {"form": form}
+    return render(request, "change_password.html", context)
