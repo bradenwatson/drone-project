@@ -1,4 +1,4 @@
-from djitellopy import Tello
+from DJITelloPy.djitellopy import Tello
 
 tello = Tello("127.0.0.1")
 
