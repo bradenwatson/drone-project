@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from .forms import UserRegistrationForm, UpdateUserForm, APForm, SwarmsForm, DronesForm
 from .models import AP, Swarms, Drones
+import drone_commands as drone_commands
 
 
 def home(request):
@@ -18,6 +19,11 @@ def home(request):
     }
 
     return render(request, "index.html", context)
+
+
+def launch(request):
+    drone_commands.launch()
+    return redirect('home')
 
 
 def user_registration(request):

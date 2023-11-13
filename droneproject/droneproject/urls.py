@@ -17,6 +17,7 @@ Including another URLconf
 from django.urls import path, include
 from drones.views import (
     home,
+    launch,
     user_registration,
     update_user,
     change_password,
@@ -34,6 +35,7 @@ from drones.views import (
 
 urlpatterns = [
     path("", home, name="home"),
+    path("launch", launch, name="launch"),
     path("account/", include("django.contrib.auth.urls")),
     path("account/signup/", user_registration, name="signup"),
     path("account/update/", update_user, name="edit_account"),
@@ -48,4 +50,3 @@ urlpatterns = [
     path("swarm/<int:swarm_id>/edit/", update_swarm, name="edit_swarm"),
     path("swarm/<int:swarm_id>/delete/", delete_swarm, name="delete_swarm")
 ]
-
