@@ -39,8 +39,7 @@ class APForm(forms.ModelForm):
         fields = [
             "ssid",
             "password",
-            "auth_method",
-            "updated_by"
+            "auth_method"
         ]
 
 
@@ -50,8 +49,7 @@ class SwarmsForm(forms.ModelForm):
         model = Swarms
 
         fields = [
-            "swarm_name",
-            "updated_by"
+            "swarm_name"
         ]
 
 
