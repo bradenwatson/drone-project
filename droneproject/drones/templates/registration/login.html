@@ -1,25 +1,30 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Drone Project • Log in</title>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 </head>
 <body>
-    {% block content %}
-    <h1>Log in</h1>
+    <div class="container">
+        {% block content %}
+        <h1>Log in</h1>
 
-    <form method="post">
-        {% csrf_token %}
+        <form method="post" class="form-control">
+            {% csrf_token %}
 
-        <div>
-            {{ form.as_p }}
-        </div>
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
 
-        <div>
-            <input type="submit" value="Log in">
-            <a href="{% url 'home' %}">Cancel</a>
-        </div>
-    </form>
-    {% endblock %}
+            <div class="action-group">
+                <input type="submit" value="Log in" id="save-input">
+                <a href="{% url 'home' %}" id="cancel-input">Cancel</a>
+            </div>
+        </form>
+        {% endblock %}
+    </div>
 </body>
 </html>

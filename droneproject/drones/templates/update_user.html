@@ -1,33 +1,39 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Drone Project • Update User</title>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/update_user.css' %}">
 </head>
 <body>
-    {% block content %}
-    <h1>Update User</h1>
+    <div class="container">
+        {% block content %}
+        <h1>Update User</h1>
 
-    <form action="{% url 'edit_account' %}" method="post">
-        {% csrf_token %}
+        <form action="{% url 'edit_account' %}" method="post" class="form-control">
+            {% csrf_token %}
 
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" name="username" value="{{ form.username.value }}">
-        </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" value="{{ form.username.value }}">
+            </div>
 
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" name="email" value="{{ form.email.value }}">
-        </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" value="{{ form.email.value }}">
+            </div>
 
-        <a href="{% url 'change_password' %}">Change Password</a>
+            <a href="{% url 'change_password' %}" id="change-password">Change Password</a>
 
-        <div>
-            <input type="submit" value="Save Changes">
-            <a href="{% url 'home' %}">Cancel</a>
-        </div>
-    </form>
-    {% endblock %}
+            <div class="action-group">
+                <input type="submit" value="Save Changes" id="save-input">
+                <a href="{% url 'home' %}" id="cancel-input">Cancel</a>
+            </div>
+        </form>
+        {% endblock %}
+    </div>
 </body>
 </html>
