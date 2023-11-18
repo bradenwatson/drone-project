@@ -22,9 +22,21 @@ def home(request):
 
 
 def launch(request):
-    swarm_commands.add_drone("127.0.0.1")
+    first_swarm_id = Swarms.objects.first()
+
+    if first_swarm_id is None:
+        return redirect("home")
+
+    drones_in_swarm = Drones.objects.filter(swarm_id=first_swarm_id)
+
+    if not drones_in_swarm.exists():
+        return redirect("home")
+
+    for drone in drones_in_swarm:
+        swarm_commands.add_drone(drone.ip_address)
+
     swarm_commands.launch()
-    return redirect('home')
+    return redirect("home")
 
 
 def user_registration(request):
@@ -204,3 +216,4 @@ def update_drone(request, drone_id):
 def delete_drone(request, drone_id):
     drone = Drones.objects.get(drone_id=drone_id)
     drone.delete()
+    return redirect("home")
