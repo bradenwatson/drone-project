@@ -1,14 +1,23 @@
 from DJITelloPy.djitellopy import TelloSwarm
 
 
-def launch():
-    swarm = TelloSwarm.fromIps(["127.0.0.1"], [8999])
+drone_ips = []
+drone_ports = []
+
+
+def add_drone(ip: str, port: int) -> None:
+    drone_ips.append(ip)
+    drone_ports.append(port)
+
+
+def launch() -> None:
+    swarm = TelloSwarm.fromIps(drone_ips, drone_ports)
 
     swarm.connect()
     swarm.takeoff()
 
     # run in parallel on all tellos
-    swarm.move_up(100)
+    swarm.move_up(50)
 
     # run by one tello after the other
     swarm.sequential(lambda i, tello: tello.move_forward(i * 20 + 20))
