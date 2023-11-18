@@ -9,14 +9,14 @@ from .tello import Tello, TelloException
 from .enforce_types import enforce_types
 
 
-@enforce_types
+# @enforce_types
 class TelloSwarm:
     """Swarm library for controlling multiple Tellos simultaneously
     """
 
     tellos: List[Tello]
     barrier: Barrier
-    funcBarier: Barrier
+    funcBarrier: Barrier
     funcQueues: List[Queue]
     threads: List[Thread]
 
@@ -38,22 +38,21 @@ class TelloSwarm:
 
         Arguments:
             ips: list of IP Addresses
+            inPorts: list of control ports
+            outPorts: list of state ports
         """
         if not ips:
             raise TelloException("No ips provided")
-
         if inPorts is None:
-            defaultInPorts = [8889]
-            inPorts = defaultInPorts[:len(ips)]
-
+            defaultInPorts = [8890, 8891, 8892, 8893, 8894, 8895, 8896, 8897, 8898, 8899]
+            inPorts = defaultInPorts[:len(ips)]  # slice list of defaults to same length as IP list
         if outPorts is None:
-            defaultOutPorts = [8890]
-            outPorts = defaultOutPorts[:len(ips)]
+            defaultOutPorts = [8990, 8991, 8992, 8993, 8994, 8995, 8996, 8997, 8998, 8999]
+            outPorts = defaultOutPorts[:len(ips)]  # slice list of defaults to same length as IP list
 
         tellos = []
-
-        for ip, inPorts, outPorts in zip(ips, inPorts, outPorts):
-            tellos.append(Tello(host=ip, control_port=inPorts, state_port=outPorts))
+        for ip, inPort, outPort in zip(ips, inPorts, outPorts):
+            tellos.append(Tello(host=ip, control_port=inPort, state_port=outPort))
 
         return TelloSwarm(tellos)
 

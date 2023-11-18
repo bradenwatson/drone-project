@@ -2,14 +2,13 @@ from DJITelloPy.djitellopy import TelloSwarm
 
 
 def launch():
-    swarm = TelloSwarm.fromIps([
-        "127.0.0.1"
-    ])
+    swarm = TelloSwarm.fromIps(["127.0.0.1"], [8999])
 
     swarm.connect()
     swarm.takeoff()
 
-    swarm.move_up(50)
+    # run in parallel on all tellos
+    swarm.move_up(100)
 
     # run by one tello after the other
     swarm.sequential(lambda i, tello: tello.move_forward(i * 20 + 20))
