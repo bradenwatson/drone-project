@@ -2,16 +2,14 @@ from DJITelloPy.djitellopy import TelloSwarm
 
 
 drone_ips = []
-drone_ports = []
 
 
-def add_drone(ip: str, port: int) -> None:
+def add_drone(ip: str) -> None:
     drone_ips.append(ip)
-    drone_ports.append(port)
 
 
 def launch() -> None:
-    swarm = TelloSwarm.fromIps(drone_ips, drone_ports)
+    swarm = TelloSwarm.fromIps(drone_ips)
 
     swarm.connect()
     swarm.takeoff()

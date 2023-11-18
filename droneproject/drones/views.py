@@ -22,7 +22,7 @@ def home(request):
 
 
 def launch(request):
-    swarm_commands.add_drone("127.0.0.1", 8999)
+    swarm_commands.add_drone("127.0.0.1")
     swarm_commands.launch()
     return redirect('home')
 
