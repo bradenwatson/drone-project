@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import swarm_commands as swarm_commands
 
 
 class Users(AbstractUser):
@@ -45,6 +46,11 @@ class Drones(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     swarm_id = models.ForeignKey(Swarms, on_delete=models.CASCADE)
     updated_by = models.ForeignKey(Users, on_delete=models.PROTECT)
+
+    def launch_drones(self):
+        for drone in Drones.objects.filter(swarm_id=self.swarm_id):
+            swarm_commands.add_drone(drone.ip_address)
+        swarm_commands.launch()
 
     def __str__(self):
         return str(self.drone_id)

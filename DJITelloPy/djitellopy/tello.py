@@ -24,7 +24,7 @@ class TelloException(Exception):
     pass
 
 
-@enforce_types
+
 class Tello:
     """Python wrapper to interact with the Ryze Tello drone using the official Tello api.
     Tello API documentation:
@@ -45,7 +45,7 @@ class Tello:
     DEFAULT_VS_UDP_PORT = 11111
     VS_UDP_PORT = DEFAULT_VS_UDP_PORT
 
-    CONTROL_UDP_PORT = 8999
+    CONTROL_UDP_PORT = 8889
     STATE_UDP_PORT = 8890
 
     # Constants for video settings
@@ -116,7 +116,7 @@ class Tello:
         if not threads_initialized:
             # Run Tello command responses UDP receiver on background
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            client_socket.bind(("", 8889))
+            client_socket.bind(("", Tello.CONTROL_UDP_PORT))
             response_receiver_thread = Thread(target=Tello.udp_response_receiver)
             response_receiver_thread.daemon = True
             response_receiver_thread.start()

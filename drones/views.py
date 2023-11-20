@@ -22,20 +22,12 @@ def home(request):
 
 
 def launch(request):
-    first_swarm_id = Swarms.objects.first()
+    first_swarm = Swarms.objects.first()
 
-    if first_swarm_id is None:
+    if first_swarm is None or not first_swarm.drones_set.exists():
         return redirect("home")
 
-    drones_in_swarm = Drones.objects.filter(swarm_id=first_swarm_id)
-
-    if not drones_in_swarm.exists():
-        return redirect("home")
-
-    for drone in drones_in_swarm:
-        swarm_commands.add_drone(drone.ip_address)
-
-    swarm_commands.launch()
+    first_swarm.drones_set.first().launch_drones()
     return redirect("home")
 
 

@@ -43,16 +43,23 @@ class TelloSwarm:
         """
         if not ips:
             raise TelloException("No ips provided")
-        if inPorts is None:
-            defaultInPorts = [8999, 8998, 8997, 8996, 8995, 8994, 8993, 8992, 8991, 8990]
-            inPorts = defaultInPorts[:len(ips)]  # slice list of defaults to same length as IP list
-        if outPorts is None:
+        if inPorts is not None:
+            # defaultInPorts = [8999, 8998, 8997, 8996, 8995, 8994, 8993, 8992, 8991, 8990]
+            # inPorts = defaultInPorts[:len(ips)]  # slice list of defaults to same length as IP list
+            # defaultInPorts = [for port in port ]
+            ...
+            # slice list of defaults to same length as IP list
+        if outPorts is not None:
             defaultOutPorts = [8890, 8891, 8892, 8893, 8894, 8895, 8896, 8897, 8898, 8899]
             outPorts = defaultOutPorts[:len(ips)]  # slice list of defaults to same length as IP list
 
         tellos = []
-        for ip, inPort, outPort in zip(ips, inPorts, outPorts):
-            tellos.append(Tello(host=ip, control_port=inPort, state_port=outPort))
+        if inPorts and outPorts:
+            for ip, inPort, outPort in zip(ips, inPorts, outPorts):
+                tellos.append(Tello(host=ip, control_port=inPort, state_port=outPort))
+        else:
+            for ip in ips:
+                tellos.append(Tello(host=ip))
 
         return TelloSwarm(tellos)
 
