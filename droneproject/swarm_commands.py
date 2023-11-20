@@ -11,16 +11,7 @@ def add_drone(ip: str) -> None:
     drone_ips.append(ip)
 
 
-def filter_drone_data(drone_data: dict) -> dict:
-    print(drone_data)
-    for key, value in drone_data.items():
-        if key.strip() == 'h':
-            drone_heights.append(int(value))
-        elif key.strip() == 'bat':
-            drone_battery_percentages.append(int(value))
-        elif key.strip() == 'tof':
-            drone_time_of_flights.append(int(value))
-
+def filter_drone_data() -> dict:
     average_height = sum(drone_heights) / len(drone_heights)
     average_battery_percentage = sum(drone_battery_percentages) / len(drone_battery_percentages)
     average_time_of_flight = sum(drone_time_of_flights) / len(drone_battery_percentages)
@@ -47,9 +38,23 @@ def launch() -> None:
         for index, tello in enumerate(swarm.tellos):
             try:
                 drone_data = tello.get_current_state()
-                drone_dict = filter_drone_data(drone_data)
+
+                print(drone_data)
+                for key, value in drone_data.items():
+                    if key.strip() == 'h':
+                        drone_heights.append(int(value))
+                    elif key.strip() == 'bat':
+                        drone_battery_percentages.append(int(value))
+                    elif key.strip() == 'tof':
+                        drone_time_of_flights.append(int(value))
             except TelloException:
                 print(f"ERROR: {TelloException}")
+
+        drone_dict = filter_drone_data()
+
+        print(drone_heights)
+        print(drone_battery_percentages)
+        print(drone_time_of_flights)
 
         # run in parallel on all tellos
         swarm.move_up(50)
