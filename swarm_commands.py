@@ -2,9 +2,8 @@ from DJITelloPy.djitellopy import TelloSwarm, TelloException
 
 
 drone_ips = []
-drone_heights = []
+connected_drone_ips = []
 drone_battery_percentages = []
-drone_time_of_flights = []
 
 
 def add_drone(ip: str) -> None:
@@ -12,24 +11,35 @@ def add_drone(ip: str) -> None:
 
 
 def filter_drone_data() -> dict:
-    average_height = sum(drone_heights) / len(drone_heights)
     average_battery_percentage = sum(drone_battery_percentages) / len(drone_battery_percentages)
-    average_time_of_flight = sum(drone_time_of_flights) / len(drone_battery_percentages)
 
     drone_averages = {
-        'height': average_height,
         'battery_percentage': average_battery_percentage,
-        'time_of_flight': average_time_of_flight
     }
 
     return drone_averages
 
 
+def connect_swarm() -> None:
+    try:
+        if connected_drone_ips == drone_ips:
+            print("ERROR: Swarm is already connected.")
+            return
+
+        swarm = TelloSwarm.fromIps(drone_ips)
+        swarm.connect()
+
+        connected_drone_ips.clear()
+        for ips in drone_ips:
+            connected_drone_ips.append(ips)
+    except Exception as exception:
+        print(f"ERROR: {exception.args[0]}")
+
+
+# Check if drone_ips is same as connect one
 def launch() -> None:
     swarm = TelloSwarm.fromIps(drone_ips)
-    drone_heights.clear()
     drone_battery_percentages.clear()
-    drone_time_of_flights.clear()
 
     try:
         swarm.connect()
@@ -41,20 +51,14 @@ def launch() -> None:
 
                 print(drone_data)
                 for key, value in drone_data.items():
-                    if key.strip() == 'h':
-                        drone_heights.append(int(value))
-                    elif key.strip() == 'bat':
+                    if key.strip() == 'bat':
                         drone_battery_percentages.append(int(value))
-                    elif key.strip() == 'tof':
-                        drone_time_of_flights.append(int(value))
             except TelloException:
                 print(f"ERROR: {TelloException}")
 
         drone_dict = filter_drone_data()
 
-        print(drone_heights)
         print(drone_battery_percentages)
-        print(drone_time_of_flights)
 
         # run in parallel on all tellos
         swarm.move_up(50)
