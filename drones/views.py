@@ -23,12 +23,12 @@ def home(request):
 
 @login_required(login_url='/account/login/')
 def launch(request):
-    # first_swarm = Swarms.objects.first()
-    #
-    # if first_swarm is None or not first_swarm.drones_set.exists():
-    #     return redirect("home")
-    #
-    # first_swarm.drones_set.first().launch_drones()
+    first_swarm = Swarms.objects.first()
+
+    if first_swarm is None or not first_swarm.drones_set.exists():
+        return redirect("home")
+
+    first_swarm.drones_set.first().launch_drones()
     return redirect("home")
 
 

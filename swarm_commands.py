@@ -25,13 +25,18 @@ def filter_drone_data() -> dict:
 
 
 def connect_swarm() -> None:
+    print("Tried to connect.")
     try:
+        print("Closer to connecting.")
         if connected_drone_ips == drone_ips:
             print("ERROR: Swarm is already connected.")
             return
 
         swarm = TelloSwarm.fromIps(drone_ips)
+        print(drone_ips)
+        print("About to connect.")
         swarm.connect()
+        print("Connected.")
 
         connected_drone_ips.clear()
         for ips in drone_ips:
@@ -42,6 +47,12 @@ def connect_swarm() -> None:
 
 
 def launch() -> None:
+    # Remove later
+    connected_drone_ips.clear()
+    for ips in drone_ips:
+        connected_drone_ips.append(ips)
+    # -
+
     if drone_ips == connected_drone_ips:
         swarm = TelloSwarm.fromIps(drone_ips)
         # drone_battery_percentages.clear()
