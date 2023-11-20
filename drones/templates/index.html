@@ -116,6 +116,7 @@
                     <td>{{ swarm.updated_at }}</td>
                     <td>{{ swarm.updated_by }}</td>
                     <td>
+                        <a href="{% url 'connect_swarm' swarm.swarm_id %}" class="item-connect">Connect</a>
                         <a href="{% url 'edit_swarm' swarm.swarm_id %}" class="item-edit">✎Edit</a>
                         <a href="{% url 'delete_swarm' swarm.swarm_id %}" class="item-delete">Delete</a>
                     </td>

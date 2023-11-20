@@ -63,10 +63,12 @@ body {
 }
 
 .items-table th {
+    text-align: center;
     color: #FFFFFF;
 }
 
 .items-table td {
+    text-align: center;
     color: #FFFFFF;
 }
 

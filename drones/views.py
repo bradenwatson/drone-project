@@ -21,13 +21,14 @@ def home(request):
     return render(request, "index.html", context)
 
 
+@login_required(login_url='/account/login/')
 def launch(request):
-    first_swarm = Swarms.objects.first()
-
-    if first_swarm is None or not first_swarm.drones_set.exists():
-        return redirect("home")
-
-    first_swarm.drones_set.first().launch_drones()
+    # first_swarm = Swarms.objects.first()
+    #
+    # if first_swarm is None or not first_swarm.drones_set.exists():
+    #     return redirect("home")
+    #
+    # first_swarm.drones_set.first().launch_drones()
     return redirect("home")
 
 
@@ -135,6 +136,13 @@ def create_swarm(request):
     }
 
     return render(request, "create_item.html", context)
+
+
+@login_required(login_url='/account/login/')
+def connect_swarm(request, swarm_id):
+    swarm = Swarms.objects.get(swarm_id=swarm_id)
+    swarm.connect_swarm()
+    return redirect("home")
 
 
 @login_required(login_url='/account/login/')

@@ -28,6 +28,7 @@ from drones.views import (
     update_drone,
     delete_drone,
     create_swarm,
+    connect_swarm,
     update_swarm,
     delete_swarm
 )
@@ -47,6 +48,7 @@ urlpatterns = [
     path("drone/<int:drone_id>/edit/", update_drone, name="edit_drone"),
     path("drone/<int:drone_id>/delete/", delete_drone, name="delete_drone"),
     path("create-swarm/", create_swarm, name="create_swarm"),
+    path("swarm/<int:swarm_id>/connect/", connect_swarm, name="connect_swarm"),
     path("swarm/<int:swarm_id>/edit/", update_swarm, name="edit_swarm"),
     path("swarm/<int:swarm_id>/delete/", delete_swarm, name="delete_swarm")
 ]
