@@ -3,7 +3,6 @@ from DJITelloPy.djitellopy import TelloSwarm, TelloException
 
 drone_ips = []
 connected_drone_ips = []
-drone_battery_percentages = []
 
 
 def clear_drones() -> None:
@@ -24,26 +23,51 @@ def filter_drone_data() -> dict:
     return drone_averages
 
 
-def connect_swarm() -> None:
-    print("Tried to connect.")
+def return_battery_percentages(drones: list) -> list:
+    drone_battery_percentages = []
+    for i, tello in enumerate(drones):
+        try:
+            drone_data = tello.get_current_state()
+
+            battery_percentage = None
+            for key, value in drone_data.items():
+                if key.strip() == 'bat':
+                    battery_percentage = int(value)
+
+            drone_info = {
+                "drone_number": i + 1,
+                "battery_percentage": battery_percentage
+            }
+
+            drone_battery_percentages.append(drone_info)
+        except Exception as exception:
+            print(f"ERROR: {exception}")
+
+    return drone_battery_percentages
+
+
+def connect_swarm() -> list:
     try:
-        print("Closer to connecting.")
         if connected_drone_ips == drone_ips:
             print("ERROR: Swarm is already connected.")
-            return
+            return []
 
         swarm = TelloSwarm.fromIps(drone_ips)
         print(drone_ips)
-        print("About to connect.")
         swarm.connect()
-        print("Connected.")
+
+        battery_percentages = return_battery_percentages(swarm.tellos)
+        print(battery_percentages)
 
         connected_drone_ips.clear()
         for ips in drone_ips:
             connected_drone_ips.append(ips)
         print(connected_drone_ips)
+
+        return battery_percentages
     except Exception as exception:
         print(f"ERROR: {exception.args[0]}")
+        return []
 
 
 def launch() -> None:
