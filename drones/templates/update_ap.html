@@ -1,25 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Drone Project • Edit AP</title>
-</head>
-<body>
-    {% block content %}
-    <h1>Edit AP</h1>
+{% extends 'base.html' %}
+{% load static %}
 
-    <form action="{% url 'edit_ap' ap.ap_id %}" method="post">
-        {% csrf_token %}
+{% block title %}Drone Project • Edit AP{% endblock %}
 
-        <div>
-            {{ form.as_p }}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block content %}
+    <body>
+        <div class="container">
+            <h1>Edit AP</h1>
+
+            <form action="{% url 'edit_ap' ap.ap_id %}" method="post" class="form-control">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="action-group">
+                    <input type="submit" value="Save" id="save-input">
+                    <a href="{% url 'home' %}" id="cancel-input">Cancel</a>
+                </div>
+            </form>
+
         </div>
-
-        <div>
-            <input type="submit" value="Save">
-            <a href="{% url 'home' %}">Cancel</a>
-        </div>
-    </form>
-    {% endblock %}
-</body>
-</html>
+    </body>
+{% endblock %}

@@ -1,168 +1,166 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Drone Project • Home</title>
+{% block title %}Drone Project • Home{% endblock %}
+
+{% block css %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-</head>
-<body>
-    {% block content %}
+{% endblock %}
 
-    {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" style="float: right;
-                                            text-decoration: none;
-                                            margin-top: 2px;
-                                            margin-left: 5px;
-                                            padding: 10px;
-                                            font-size: 18px;
-                                            color: #FFFFFF;"
-        >Log out</a>
+{% block content %}
+    <body>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" style="float: right;
+                                                text-decoration: none;
+                                                margin-top: 2px;
+                                                margin-left: 5px;
+                                                padding: 10px;
+                                                font-size: 18px;
+                                                color: #FFFFFF;"
+            >Log out</a>
 
-        <a href="{% url 'edit_account' %}" style="float: right;
-                          margin-top: 12px;
-                          margin-right: 5px;
-                          font-size: 18px;
-                          color: #FFFFFF;">
-            {{ user.username }}
-        </a>
-    {% else %}
-        <a href="{% url 'signup' %}" style="float: right;
-                                            text-decoration: none;
-                                            margin-left: 5px;
-                                            padding: 10px;
-                                            border-radius: 15px;
-                                            border-style: solid;
-                                            font-size: 18px;
-                                            color: #FFFFFF;"
-        >Sign up</a>
+            <a href="{% url 'edit_account' %}" style="float: right;
+                              margin-top: 12px;
+                              margin-right: 5px;
+                              font-size: 18px;
+                              color: #FFFFFF;">
+                {{ user.username }}
+            </a>
+        {% else %}
+            <a href="{% url 'signup' %}" style="float: right;
+                                                text-decoration: none;
+                                                margin-left: 5px;
+                                                padding: 10px;
+                                                border-radius: 15px;
+                                                border-style: solid;
+                                                font-size: 18px;
+                                                color: #FFFFFF;"
+            >Sign up</a>
 
-        <a href="{% url 'login' %}" style="float: right;
-                                            text-decoration: none;
-                                            margin-top: 2px;
-                                            margin-right: 5px;
-                                            padding: 10px;
-                                            font-size: 18px;
-                                            color: #FFFFFF;"
-        >Log in</a>
-    {% endif %}
+            <a href="{% url 'login' %}" style="float: right;
+                                                text-decoration: none;
+                                                margin-top: 2px;
+                                                margin-right: 5px;
+                                                padding: 10px;
+                                                font-size: 18px;
+                                                color: #FFFFFF;"
+            >Log in</a>
+        {% endif %}
 
-    <div class="launch-container">
-        <a href="launch" id="launch-input">Launch</a>
-    </div>
+        <div class="launch-container">
+            <a href="launch" id="launch-input">Launch</a>
+        </div>
 
-    <div class="item-heading">
-        <h1>Drones</h1>
-        <a href="{% url 'create_drone' %}">Create Drone</a>
-    </div>
+        <div class="item-heading">
+            <h1>Drones</h1>
+            <a href="{% url 'create_drone' %}">Create Drone</a>
+        </div>
 
-    <table class="items-table">
-        <thead>
-            <tr>
-                <th>Drone ID</th>
-                <th>Drone Name</th>
-                <th>MAC Address</th>
-                <th>IP Address</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Swarm ID</th>
-                <th>Updated By</th>
-                <th>Battery</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for drone in drones %}
+        <table class="items-table">
+            <thead>
                 <tr>
-                    <td>{{ drone.drone_id }}</td>
-                    <td>{{ drone.drone_name }}</td>
-                    <td>{{ drone.mac_address }}</td>
-                    <td>{{ drone.ip_address }}</td>
-                    <td>{{ drone.created_at }}</td>
-                    <td>{{ drone.updated_at }}</td>
-                    <td>{{ drone.swarm_id }}</td>
-                    <td>{{ drone.updated_by }}</td>
-                    <td>{{ drone.battery }}</td>
-                    <td>
-                        <a href="{% url 'edit_drone' drone.drone_id %}" class="item-edit">✎Edit</a>
-                        <a href="{% url 'delete_drone' drone.drone_id %}" class="item-delete">Delete</a>
-                    </td>
+                    <th>Drone ID</th>
+                    <th>Drone Name</th>
+                    <th>MAC Address</th>
+                    <th>IP Address</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Swarm ID</th>
+                    <th>Updated By</th>
+                    <th>Battery</th>
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for drone in drones %}
+                    <tr>
+                        <td>{{ drone.drone_id }}</td>
+                        <td>{{ drone.drone_name }}</td>
+                        <td>{{ drone.mac_address }}</td>
+                        <td>{{ drone.ip_address }}</td>
+                        <td>{{ drone.created_at }}</td>
+                        <td>{{ drone.updated_at }}</td>
+                        <td>{{ drone.swarm_id }}</td>
+                        <td>{{ drone.updated_by }}</td>
+                        <td>{{ drone.battery }}</td>
+                        <td>
+                            <a href="{% url 'edit_drone' drone.drone_id %}" class="item-edit">✎Edit</a>
+                            <a href="{% url 'delete_drone' drone.drone_id %}" class="item-delete">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <div class="item-heading">
-        <h1>Swarms</h1>
-        <a href="{% url 'create_swarm' %}">Create Swarm</a>
-    </div>
+        <div class="item-heading">
+            <h1>Swarms</h1>
+            <a href="{% url 'create_swarm' %}">Create Swarm</a>
+        </div>
 
-    <table class="items-table">
-        <thead>
-            <tr>
-                <th>Swarm ID</th>
-                <th>Swarm Name</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Updated By</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for swarm in swarms %}
+        <table class="items-table">
+            <thead>
                 <tr>
-                    <td>{{ swarm.swarm_id }}</td>
-                    <td>{{ swarm.swarm_name }}</td>
-                    <td>{{ swarm.created_at }}</td>
-                    <td>{{ swarm.updated_at }}</td>
-                    <td>{{ swarm.updated_by }}</td>
-                    <td>
-                        <a href="{% url 'connect_swarm' swarm.swarm_id %}" class="item-connect">Connect</a>
-                        <a href="{% url 'edit_swarm' swarm.swarm_id %}" class="item-edit">✎Edit</a>
-                        <a href="{% url 'delete_swarm' swarm.swarm_id %}" class="item-delete">Delete</a>
-                    </td>
+                    <th>Swarm ID</th>
+                    <th>Swarm Name</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Updated By</th>
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for swarm in swarms %}
+                    <tr>
+                        <td>{{ swarm.swarm_id }}</td>
+                        <td>{{ swarm.swarm_name }}</td>
+                        <td>{{ swarm.created_at }}</td>
+                        <td>{{ swarm.updated_at }}</td>
+                        <td>{{ swarm.updated_by }}</td>
+                        <td>
+                            <a href="{% url 'connect_swarm' swarm.swarm_id %}" class="item-connect">Connect</a>
+                            <a href="{% url 'edit_swarm' swarm.swarm_id %}" class="item-edit">✎Edit</a>
+                            <a href="{% url 'delete_swarm' swarm.swarm_id %}" class="item-delete">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <div class="item-heading">
-        <h1>Access Points</h1>
-        <a href="{% url 'create_ap' %}">Create AP</a>
-    </div>
+        <div class="item-heading">
+            <h1>Access Points</h1>
+            <a href="{% url 'create_ap' %}">Create AP</a>
+        </div>
 
-    <table class="items-table">
-        <thead>
-            <tr>
-                <th>AP ID</th>
-                <th>SSID</th>
-                <th>Password</th>
-                <th>Auth Method</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Updated By</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ap in aps %}
+        <table class="items-table">
+            <thead>
                 <tr>
-                    <td>{{ ap.ap_id }}</td>
-                    <td>{{ ap.ssid }}</td>
-                    <td>{{ ap.password }}</td>
-                    <td>{{ ap.auth_method }}</td>
-                    <td>{{ ap.created_at }}</td>
-                    <td>{{ ap.updated_at }}</td>
-                    <td>{{ ap.updated_by }}</td>
-                    <td>
-                        <a href="{% url 'edit_ap' ap.ap_id %}" class="item-edit">✎Edit</a>
-                        <a href="{% url 'delete_ap' ap.ap_id %}" class="item-delete">Delete</a>
-                    </td>
+                    <th>AP ID</th>
+                    <th>SSID</th>
+                    <th>Password</th>
+                    <th>Auth Method</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Updated By</th>
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endblock %}
-</body>
-</html>
+            </thead>
+            <tbody>
+                {% for ap in aps %}
+                    <tr>
+                        <td>{{ ap.ap_id }}</td>
+                        <td>{{ ap.ssid }}</td>
+                        <td>{{ ap.password }}</td>
+                        <td>{{ ap.auth_method }}</td>
+                        <td>{{ ap.created_at }}</td>
+                        <td>{{ ap.updated_at }}</td>
+                        <td>{{ ap.updated_by }}</td>
+                        <td>
+                            <a href="{% url 'edit_ap' ap.ap_id %}" class="item-edit">✎Edit</a>
+                            <a href="{% url 'delete_ap' ap.ap_id %}" class="item-delete">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+{% endblock %}
