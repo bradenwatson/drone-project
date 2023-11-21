@@ -33,12 +33,12 @@ class Swarms(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey(Users, on_delete=models.PROTECT)
 
-    def connect_swarm(self):
+    def connect_swarm(self) -> list:
         swarm_commands.clear_drones()
         for drone in Drones.objects.filter(swarm_id=self.swarm_id):
             swarm_commands.add_drone(drone.ip_address)
 
-        swarm_commands.connect_swarm()
+        return swarm_commands.connect_swarm()
 
     def __str__(self):
         return str(self.swarm_id)
@@ -53,6 +53,7 @@ class Drones(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     swarm_id = models.ForeignKey(Swarms, on_delete=models.CASCADE)
     updated_by = models.ForeignKey(Users, on_delete=models.PROTECT)
+    battery = models.CharField(max_length=12, default="Not Connected")
 
     def launch_drones(self):
         for drone in Drones.objects.filter(swarm_id=self.swarm_id):

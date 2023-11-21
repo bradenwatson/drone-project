@@ -53,16 +53,13 @@ def connect_swarm() -> list:
             return []
 
         swarm = TelloSwarm.fromIps(drone_ips)
-        print(drone_ips)
         swarm.connect()
 
         battery_percentages = return_battery_percentages(swarm.tellos)
-        print(battery_percentages)
 
         connected_drone_ips.clear()
         for ips in drone_ips:
             connected_drone_ips.append(ips)
-        print(connected_drone_ips)
 
         return battery_percentages
     except Exception as exception:

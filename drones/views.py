@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from .forms import UserRegistrationForm, UpdateUserForm, APForm, SwarmsForm, DronesForm
 from .models import AP, Swarms, Drones
-import swarm_commands as swarm_commands
 
 
 def home(request):
@@ -141,7 +140,16 @@ def create_swarm(request):
 @login_required(login_url='/account/login/')
 def connect_swarm(request, swarm_id):
     swarm = Swarms.objects.get(swarm_id=swarm_id)
-    swarm.connect_swarm()
+    battery_percentages = swarm.connect_swarm()
+
+    if battery_percentages:
+        drones = Drones.objects.filter(swarm_id=swarm_id).order_by('drone_id')
+
+        for drone, battery_info in zip(drones, battery_percentages):
+            battery_percentage = battery_info.get('battery_percentage')
+            drone.battery = str(battery_percentage) + "%"
+            drone.save()
+
     return redirect("home")
 
 
