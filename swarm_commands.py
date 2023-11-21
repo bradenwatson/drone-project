@@ -1,4 +1,4 @@
-from DJITelloPy.djitellopy import TelloSwarm, TelloException
+from DJITelloPy.djitellopy import TelloSwarm
 
 
 drone_ips = []
@@ -11,16 +11,6 @@ def clear_drones() -> None:
 
 def add_drone(ip: str) -> None:
     drone_ips.append(ip)
-
-
-def filter_drone_data() -> dict:
-    average_battery_percentage = sum(drone_battery_percentages) / len(drone_battery_percentages)
-
-    drone_averages = {
-        'battery_percentage': average_battery_percentage,
-    }
-
-    return drone_averages
 
 
 def return_battery_percentages(drones: list) -> list:
@@ -68,42 +58,16 @@ def connect_swarm() -> list:
 
 
 def launch() -> None:
-    # Remove later
-    connected_drone_ips.clear()
-    for ips in drone_ips:
-        connected_drone_ips.append(ips)
-    # -
-
-    if drone_ips == connected_drone_ips:
+    if drone_ips == connected_drone_ips and connected_drone_ips:
         swarm = TelloSwarm.fromIps(drone_ips)
-        # drone_battery_percentages.clear()
 
         try:
             swarm.takeoff()
-
-            # for index, tello in enumerate(swarm.tellos):
-            #     try:
-            #         drone_data = tello.get_current_state()
-            #
-            #         print(drone_data)
-            #         for key, value in drone_data.items():
-            #             if key.strip() == 'bat':
-            #                 drone_battery_percentages.append(int(value))
-            #     except TelloException:
-            #         print(f"ERROR: {TelloException}")
-            #
-            # drone_dict = filter_drone_data()
-            #
-            # print(drone_battery_percentages)
-
-            # run in parallel on all tellos
-            swarm.move_up(50)
-
-            # run by one tello after the other
-            # swarm.sequential(lambda i, tello: tello.move_forward(i * 20 + 20))
-            #
-            # making each tello do something unique in parallel
-            # swarm.parallel(lambda i, tello: tello.move_left(i * 20 + 20))
+            swarm.move_up(60)
+            swarm.move_forward(30)
+            swarm.move_back(30)
+        except Exception as exception:
+            print(f"ERROR: {exception.args[0]}")
         finally:
             swarm.land()
             swarm.end()

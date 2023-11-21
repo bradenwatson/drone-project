@@ -79,6 +79,10 @@ body {
     color: #FFFFFF;
 }
 
+.item-connect {
+    background-color: #50C878;
+}
+
 .item-edit {
     background-color: #FFBF00;
 }
