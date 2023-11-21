@@ -143,6 +143,7 @@ def connect_swarm(request, swarm_id):
     battery_percentages = swarm.connect_swarm()
 
     if battery_percentages:
+        Drones.objects.all().update(battery="Not Connected")
         drones = Drones.objects.filter(swarm_id=swarm_id).order_by('drone_id')
 
         for drone, battery_info in zip(drones, battery_percentages):
