@@ -6,14 +6,28 @@ connected_drone_ips = []
 
 
 def clear_drones() -> None:
+    """Clears the list of drone ips."""
     drone_ips.clear()
 
 
 def add_drone(ip: str) -> None:
+    """Appends a new drone ip to the list of drone ips.
+
+    Args:
+        ip: The ip of the drone to add.
+    """
     drone_ips.append(ip)
 
 
 def return_battery_percentages(drones: list) -> list:
+    """Returns a list of battery percentages for all the drones in the list.
+
+    Args:
+        drones: The list of drones to check battery percentages.
+
+    Returns:
+        list: A list of battery percentages with the number of the drone.
+    """
     drone_battery_percentages = []
     for i, tello in enumerate(drones):
         try:
@@ -37,6 +51,11 @@ def return_battery_percentages(drones: list) -> list:
 
 
 def connect_swarm() -> list:
+    """Connects the swarm of drones.
+
+    Returns:
+        list: A list of battery percentages with the number of the drone.
+    """
     try:
         if connected_drone_ips == drone_ips:
             print("ERROR: Swarm is already connected.")
@@ -58,6 +77,7 @@ def connect_swarm() -> list:
 
 
 def launch() -> None:
+    """Launches the swarm of drones and moves them up, forward, back, and then lands them."""
     if drone_ips == connected_drone_ips and connected_drone_ips:
         swarm = TelloSwarm.fromIps(drone_ips)
 
